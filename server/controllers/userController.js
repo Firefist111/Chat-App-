@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import { generateToken, hashPassword } from "../config/utility.js";
 import { asyncHandler } from "../config/asyncHandler.js";
 import { errorHandler } from "../config/errorhandler.js";
+import cloudinary from "../config/cloudinary.js";
 
 export const register = asyncHandler(async (req, res, next) => {
   const { fullName, userName, password } = req.body;
@@ -117,3 +118,21 @@ export const getOtherUser = asyncHandler(async (req, res, next) => {
     user
   })
 });
+
+
+export const updateProfile = asyncHandler(async(req,res,next)=>{
+  const {avatar} = req.body
+  const userId = req.user.id;
+  if(!avatar){
+     return next(new errorHandler("Profile pic not exists", 401));
+  }
+
+  const response = await cloudinary.uploader.upload(avatar)
+  const updatedUser = await User.findByIdAndUpdate(userId,{avatar : response.secure_url},{new : true})
+
+  res.status(200).json({
+    success: true,
+    user : updatedUser,
+    message : "Profile updated successfully"
+  });
+})

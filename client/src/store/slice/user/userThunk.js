@@ -91,3 +91,17 @@ export const getOtherUserThunk = createAsyncThunk(
     }
   }
 );
+
+export const updateUserProfile = createAsyncThunk(
+  "user/updateUserProfile",
+  async ({avatar}, { rejectWithValue }) => {
+    try {
+      const response = await api.put("/user/update-profile",{avatar});
+      const data = response.data;
+      return data;
+    } catch (error) {
+      const message = error.response?.data?.message || "Upload failed";
+      return rejectWithValue(message);
+    }
+  },
+);

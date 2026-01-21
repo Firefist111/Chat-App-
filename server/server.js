@@ -5,7 +5,9 @@ import express from "express";
 import { connectDb } from "./config/db.js";
 import { errorMiddleware } from "./middleware/errorMiddleware.js";
 
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+
 
 import cookieParser from "cookie-parser";
 app.use(cookieParser());

@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import { getUserThunk } from "./store/slice/user/userThunk";
 import { useDispatch } from "react-redux";
+import ProfilePage from "./Pages/ProfilePage";
 
 const App = () => {
   const dispatch = useDispatch()
@@ -27,6 +28,7 @@ const App = () => {
         />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/user-profile" element={<ProfilePage />} />
       </Routes>
     </div>
   );

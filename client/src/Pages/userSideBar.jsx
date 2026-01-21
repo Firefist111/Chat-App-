@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { CiEdit } from "react-icons/ci";
+
 import User from "../components/User";
 import {
   getOtherUserThunk,
   userLogoutThunk,
 } from "../store/slice/user/userThunk";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const UserSideBar = () => {
   const dispatch = useDispatch();
@@ -97,7 +99,11 @@ const UserSideBar = () => {
             {user?.fullName}
           </div>
         </div>
-
+        <button className="flex gap-1 items-center pl-9" onClick={()=>{
+          navigate('/user-profile')
+        }}>
+              <CiEdit/> <span>Edit</span>
+        </button>
         <button
           className="btn btn-sm bg-amber-700 text-white"
           onClick={handleLogout}

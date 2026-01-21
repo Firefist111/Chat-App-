@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   getOtherUserThunk,
   getUserThunk,
+  updateUserProfile,
   userLoginThunk,
   userLogoutThunk,
   userSignupThunk,
@@ -77,16 +78,16 @@ export const userSlice = createSlice({
 
       //GET USER
       .addCase(getUserThunk.pending, (state) => {
-        state.screenLoading = true
+        state.screenLoading = true;
       })
       .addCase(getUserThunk.fulfilled, (state, action) => {
         state.isAuthenticated = true;
         state.user = action?.payload?.user;
         state.screenLoading = false;
       })
-      .addCase(getUserThunk.rejected, (state,action) => {
+      .addCase(getUserThunk.rejected, (state, action) => {
         state.screenLoading = false;
-        state.error = action.payload
+        state.error = action.payload;
       })
 
       //GET OTHER USER
@@ -100,6 +101,20 @@ export const userSlice = createSlice({
       })
       .addCase(getOtherUserThunk.rejected, (state, action) => {
         state.screenLoading = false;
+        state.error = action.payload;
+      })
+
+      //UPLOAD USER DETAILS
+      .addCase(updateUserProfile.pending, (state) => {
+        state.buttonLoading = true;
+        state.error = null;
+      })
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
+        state.buttonLoading = false;
+        state.user = action.payload
+      })
+      .addCase(updateUserProfile.rejected, (state, action) => {
+        state.buttonLoading = false;
         state.error = action.payload;
       });
   },
